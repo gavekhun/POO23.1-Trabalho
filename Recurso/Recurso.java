@@ -1,9 +1,9 @@
 package Recurso;
 public abstract class Recurso{
 
-  protected final int ID=Prox_ID;
+  protected final int ID=prox_ID;
   protected String url_recurso;
-  public static int Prox_ID=1;
+  public static int prox_ID=1;
 
  
 
