@@ -15,8 +15,7 @@ public class PostFoto implements Postavel {
 
     public PostFoto(boolean incluirFoto, String localizacao) {
         if (incluirFoto == false) {
-            this.data_postagem = LocalDateTime.now();
-            this.localizacao = localizacao;
+            this.postSemFoto(localizacao);
         }
     }
 
@@ -24,6 +23,7 @@ public class PostFoto implements Postavel {
         if (foto != null) {
             this.fotos.add(foto);
             this.qtde_fotos += 1;
+            this.printAtributos();
             return true;
         }
         this.pritnErro("É necessário informar uma foto para ser inserida na lista");
@@ -35,10 +35,18 @@ public class PostFoto implements Postavel {
         if (foto != null) {
             this.fotos.remove(foto);
             this.qtde_fotos -= 1;
+            this.printAtributos();
             return true;
         }
         this.pritnErro("É necessário informar uma foto para ser removida da lista");
         return false;
+    }
+
+    private boolean postSemFoto(String localizacao) {
+        this.data_postagem = LocalDateTime.now();
+        this.localizacao = localizacao;
+        this.printAtributos();
+        return true;
     }
 
     public int getQtde_Fotos() {
@@ -69,6 +77,7 @@ public class PostFoto implements Postavel {
     public boolean posta() {
         if (this.fotos.size() >= 1 && this.fotos.size() <= 10) {
             this.data_postagem = LocalDateTime.now();
+            this.printAtributos();
             return true;
         }
         this.pritnErro("Quantidade de fotos deve estar entre 1 e 10");

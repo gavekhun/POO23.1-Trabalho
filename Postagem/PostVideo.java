@@ -13,23 +13,31 @@ public class PostVideo implements Postavel {
 
   public PostVideo(boolean incluirVideo) {
     if (incluirVideo == false) {
-      this.data_postagem = LocalDateTime.now();
+      this.postSemVideo();
     }
   }
 
   public boolean adicionaVideo(Video video) {
     if (video != null) {
       this.video = video;
+      this.printAtributos();
       return true;
     }
     this.pritnErro("É necessário informar um video para ser postado");
     return false;
   }
 
+  private boolean postSemVideo() {
+    this.data_postagem = LocalDateTime.now();
+    this.printAtributos();
+    return true;
+  }
+
   @Override
   public boolean posta() {
     if (this.video != null) {
       this.data_postagem = LocalDateTime.now();
+      this.printAtributos();
     }
     pritnErro("Nenhum vídeo foi selecionado");
     return false;
