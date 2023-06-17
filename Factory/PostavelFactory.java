@@ -6,15 +6,15 @@ import Postagem.Postavel;
 
 public class PostavelFactory {
 
-    public static Postavel getPostavel(String tipoPost) {
+    public static Postavel getPostavel(String tipoPost, boolean incluirMidia, String localizacao) {
         Postavel post = null;
         if (tipoPost.equals("POSTVIDEO")) {
-            PostVideo postVideo = new PostVideo(false);
+            PostVideo postVideo = new PostVideo(incluirMidia);
             post = postVideo;
         }
 
         if (tipoPost.equals("POSTFOTO")) {
-            PostFoto postFoto = new PostFoto(false, null);
+            PostFoto postFoto = new PostFoto(incluirMidia, localizacao);
             post = postFoto;
         }
 

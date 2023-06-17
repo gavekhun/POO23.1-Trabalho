@@ -1,8 +1,7 @@
 package Postagem;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Locale;
-
 import Recurso.Foto;
 
 public class PostFoto implements Postavel {
@@ -12,6 +11,7 @@ public class PostFoto implements Postavel {
     private String localizacao;
     private LocalDateTime data_postagem;
     private ArrayList<Comentario> lista_comentarios = new ArrayList<Comentario>();
+    private int qtde_fixados;
 
     public PostFoto(boolean incluirFoto, String localizacao) {
         if (incluirFoto == false) {
@@ -41,6 +41,30 @@ public class PostFoto implements Postavel {
         return false;
     }
 
+    public int getQtde_Fotos() {
+        return this.qtde_fotos;
+    }
+
+    public ArrayList<Foto> getFotos() {
+        return this.fotos;
+    }
+
+    public String getLocalizacao() {
+        return this.localizacao != null ? this.localizacao : "Nenhuma localização adicionada";
+    }
+
+    public ArrayList<Comentario> getComentarios() {
+        return this.lista_comentarios;
+    }
+
+    public LocalDateTime getData_Postagem() {
+        return this.data_postagem;
+    }
+
+    public int getQtde_Fixados() {
+        return this.qtde_fixados;
+    }
+
     @Override
     public boolean posta() {
         if (this.fotos.size() >= 1 && this.fotos.size() <= 10) {
@@ -51,15 +75,35 @@ public class PostFoto implements Postavel {
         return false;
     }
 
+    @Override
+    public boolean comenta(boolean fixado, int tamanho, String texto) {
+        try {
+            Comentario comentario = new Comentario(fixado, tamanho, texto);
+            this.lista_comentarios.add(comentario);
+            this.printAtributos();
+            return true;
+        } catch (NullPointerException e) {
+            System.out.println("Erro ao adicionar comentário. Tente novamente.");
+            return false;
+        }
+    }
 
+    private void printAtributos() {
+        System.out.println("Quantidade de fotos :" + this.qtde_fotos + "\nData da postagem: " + this.data_postagem
+                + "\nLocalizacao: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
+                + this.qtde_fixados);
+        System.out.println("Fotos adicionadas ao post :");
+        for (Foto foto : this.fotos) {
+            System.out.println(foto.toString());
+        }
+        System.out.println("Comentários do post");
+        for (Comentario coment : this.lista_comentarios) {
+            System.out.println(coment.toString());
+        }
+    }
 
-    // @Override
-    // public boolean comenta() {
-    // }
-
-
-    private void pritnErro(String msg){
-        System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg );
+    private void pritnErro(String msg) {
+        System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);
     }
 
 }

@@ -5,10 +5,11 @@ public class Foto extends Recurso {
   protected String resolucao;
 
   public Foto(String url_recurso, String resolucao) {
-
-    this.url_recurso = url_recurso;
-    this.resolucao = resolucao;
-    prox_ID += 1;
+    if (validaUrlRecurso(url_recurso)) {
+      this.url_recurso = url_recurso;
+      this.resolucao = resolucao;
+      prox_ID += 1;
+    }
 
   }
 
@@ -16,14 +17,27 @@ public class Foto extends Recurso {
   public boolean validaUrlRecurso(String url_recurso) {
     String[] extensao = url_recurso.split("\\.");
 
-    if (extensao[1].equals("jpg"))
+    if (extensao[1].equals("jpg")) {
+      System.out.println(this.toString());
       return true;
-    else if (extensao[1].equals("png"))
+
+    } else if (extensao[1].equals("png")) {
+      System.out.println(this.toString());
+
       return true;
-    else if (extensao[1].equals("bmp"))
+    } else if (extensao[1].equals("bmp")) {
+      System.out.println(this.toString());
+
       return true;
+    }
     this.pritnErro("Extensão inválida. Selecionar .jpg, .png ou .bmp");
     return false;
+  }
+
+  @Override
+  public String toString() {
+    return "Foto {" + "ID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado? "
+        + this.validaUrlRecurso(url_recurso) + "}";
   }
 
   public void getInfo() {
