@@ -20,7 +20,7 @@ public class PostVideo implements Postavel {
   public boolean adicionaVideo(Video video) {
     if (video != null) {
       this.video = video;
-      this.printAtributos();
+      // this.printAtributos();
       return true;
     }
     this.pritnErro("É necessário informar um video para ser postado");
@@ -29,7 +29,9 @@ public class PostVideo implements Postavel {
 
   private boolean postSemVideo() {
     this.data_postagem = LocalDateTime.now();
+    System.out.println("-----------------------------------------------------");
     this.printAtributos();
+    System.out.println("-----------------------------------------------------");
     return true;
   }
 
@@ -37,18 +39,20 @@ public class PostVideo implements Postavel {
   public boolean posta() {
     if (this.video != null) {
       this.data_postagem = LocalDateTime.now();
+      System.out.println("-----------------------------------------------------");
       this.printAtributos();
+      System.out.println("-----------------------------------------------------");
     }
     pritnErro("Nenhum vídeo foi selecionado");
     return false;
   }
 
   @Override
-  public boolean comenta(boolean fixado, int tamanho, String texto) {
+  public boolean comenta( String texto) {
     try {
-      Comentario comentario = new Comentario(fixado, tamanho, texto);
+      Comentario comentario = new Comentario(texto);
       this.lista_comentarios.add(comentario);
-      this.printAtributos();
+      // this.printAtributos();
       return true;
     } catch (NullPointerException e) {
       System.out.println("Erro ao adicionar comentário. Tente novamente.");

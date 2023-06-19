@@ -23,7 +23,9 @@ public class PostFoto implements Postavel {
         if (foto != null) {
             this.fotos.add(foto);
             this.qtde_fotos += 1;
-            this.printAtributos();
+            // System.out.println("---------------------------------------------------------");
+            // this.printAtributos();
+            // System.out.println("---------------------------------------------------------");
             return true;
         }
         this.pritnErro("É necessário informar uma foto para ser inserida na lista");
@@ -35,17 +37,21 @@ public class PostFoto implements Postavel {
         if (foto != null) {
             this.fotos.remove(foto);
             this.qtde_fotos -= 1;
+            System.out.println("---------------------------------------------------------");
             this.printAtributos();
+            System.out.println("---------------------------------------------------------");
             return true;
         }
         this.pritnErro("É necessário informar uma foto para ser removida da lista");
         return false;
     }
 
-    private boolean postSemFoto(String localizacao) {
+    public boolean postSemFoto(String localizacao) {
         this.data_postagem = LocalDateTime.now();
         this.localizacao = localizacao;
+        System.out.println("---------------------------------------------------------");
         this.printAtributos();
+        System.out.println("---------------------------------------------------------");
         return true;
     }
 
@@ -61,6 +67,11 @@ public class PostFoto implements Postavel {
         return this.localizacao != null ? this.localizacao : "Nenhuma localização adicionada";
     }
 
+    public void setLocalizacao(String localizacao){
+        this.localizacao = localizacao;
+
+    }
+
     public ArrayList<Comentario> getComentarios() {
         return this.lista_comentarios;
     }
@@ -73,23 +84,48 @@ public class PostFoto implements Postavel {
         return this.qtde_fixados;
     }
 
+    public void fixaComenta(int index){
+        if (index >= 0 && index < lista_comentarios.size() ){
+            Comentario comentario = lista_comentarios.get(index);
+            comentario.setFixado(true);
+            lista_comentarios.remove(index);
+            lista_comentarios.add(qtde_fixados, comentario);
+            qtde_fixados++;
+        }
+    }
+    public void desfixaComenta(int index){
+        if(index >= 0 && index < qtde_fixados){
+            Comentario comentario = lista_comentarios.get(index);
+            comentario.setFixado(false);
+            lista_comentarios.remove(index);
+            lista_comentarios.add(comentario);
+            qtde_fixados--;
+        }
+
+    }
+
     @Override
     public boolean posta() {
         if (this.fotos.size() >= 1 && this.fotos.size() <= 10) {
             this.data_postagem = LocalDateTime.now();
+            System.out.println("---------------------------------------------------------");
             this.printAtributos();
+            System.out.println("---------------------------------------------------------");
             return true;
         }
+        
         this.pritnErro("Quantidade de fotos deve estar entre 1 e 10");
         return false;
     }
 
     @Override
-    public boolean comenta(boolean fixado, int tamanho, String texto) {
+    public boolean comenta(String texto) {
         try {
-            Comentario comentario = new Comentario(fixado, tamanho, texto);
+            Comentario comentario = new Comentario(texto);
             this.lista_comentarios.add(comentario);
-            this.printAtributos();
+            // System.out.println("---------------------------------------------------------");
+            // this.printAtributos();
+            // System.out.println("---------------------------------------------------------");
             return true;
         } catch (NullPointerException e) {
             System.out.println("Erro ao adicionar comentário. Tente novamente.");
@@ -105,7 +141,7 @@ public class PostFoto implements Postavel {
         for (Foto foto : this.fotos) {
             System.out.println(foto.toString());
         }
-        System.out.println("Comentários do post");
+        System.out.println("Comentários do post:");
         for (Comentario coment : this.lista_comentarios) {
             System.out.println(coment.toString());
         }
