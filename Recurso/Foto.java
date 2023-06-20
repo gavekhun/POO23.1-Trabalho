@@ -5,7 +5,7 @@ public class Foto extends Recurso {
   protected String resolucao;
 
   public Foto(String url_recurso, String resolucao) {
-     if (validaUrlRecurso(url_recurso)) {
+    if (validaUrlRecurso(url_recurso)) {
       this.url_recurso = url_recurso;
       this.resolucao = resolucao;
       prox_ID += 1;
@@ -14,18 +14,16 @@ public class Foto extends Recurso {
   }
 
   @Override
-  public boolean validaUrlRecurso(String url_recurso) {    
+  public boolean validaUrlRecurso(String url_recurso) {
 
     if (url_recurso.endsWith(".jpg")) {
-      // System.out.println(this.toString());
+
       return true;
 
     } else if (url_recurso.endsWith(".png")) {
-      // System.out.println(this.toString());
 
       return true;
     } else if (url_recurso.endsWith(".bmp")) {
-      // System.out.println(this.toString());
 
       return true;
     }
@@ -38,7 +36,7 @@ public class Foto extends Recurso {
     return "Foto {" + "ID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado? "
         + this.validaUrlRecurso(url_recurso) + "}";
   }
- 
+
   private void pritnErro(String msg) {
     System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);
   }

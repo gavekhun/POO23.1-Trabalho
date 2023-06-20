@@ -18,15 +18,10 @@ public class Video extends Recurso {
   public boolean validaUrlRecurso(String url_recurso) {
 
     if (url_recurso.endsWith(".mp4")) {
-      // System.out.println(this.toString());
       return true;
     } else if (url_recurso.endsWith(".mov")) {
-      // System.out.println(this.toString());
-
       return true;
     } else if (url_recurso.endsWith(".wmv")) {
-      // System.out.println(this.toString());
-
       return true;
     }
     this.pritnErro("O vídeo precisa ter uma das extensões: .mp4, .mov ou .wmv");
@@ -39,7 +34,6 @@ public class Video extends Recurso {
     return "Video { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado? "
         + this.validaUrlRecurso(url_recurso) + " }";
   }
-
 
   private void pritnErro(String msg) {
     System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);

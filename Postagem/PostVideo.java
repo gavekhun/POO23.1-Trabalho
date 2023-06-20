@@ -27,7 +27,7 @@ public class PostVideo implements Postavel {
     return false;
   }
 
-  private boolean postSemVideo() {
+  public boolean postSemVideo() {
     this.data_postagem = LocalDateTime.now();
     System.out.println("-----------------------------------------------------");
     this.printAtributos();
@@ -59,9 +59,13 @@ public class PostVideo implements Postavel {
       return false;
     }
   }
+  public Video getVideo(){
+    return this.video;
+  }
+  
 
   private void printAtributos() {
-    System.out.println("Dados do vídeo :" + this.video.toString() + "\nData da postagem: " + this.data_postagem
+    System.out.println("Dados do vídeo :" + getVideo() + "\nData da postagem: " + this.data_postagem
         + "\nQuantidade de comentários Fixados: "
         + this.qtde_fixados);
     System.out.println("Comentários do post");

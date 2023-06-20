@@ -12,10 +12,12 @@ public class PostFoto implements Postavel {
     private LocalDateTime data_postagem;
     private ArrayList<Comentario> lista_comentarios = new ArrayList<Comentario>();
     private int qtde_fixados;
+    private String descricao;
 
     public PostFoto(boolean incluirFoto, String localizacao) {
         if (incluirFoto == false) {
-            this.postSemFoto(localizacao);
+            this.data_postagem = LocalDateTime.now();
+            this.localizacao = localizacao;
         }
     }
 
@@ -46,11 +48,12 @@ public class PostFoto implements Postavel {
         return false;
     }
 
-    public boolean postSemFoto(String localizacao) {
+    public boolean postSemFoto(String localizacao, String descricao) {
         this.data_postagem = LocalDateTime.now();
+        this.descricao = descricao;
         this.localizacao = localizacao;
-        System.out.println("---------------------------------------------------------");
-        this.printAtributos();
+        System.out.println("---------------------------------------------------------");       
+        this.printAtributos();        
         System.out.println("---------------------------------------------------------");
         return true;
     }
@@ -137,6 +140,9 @@ public class PostFoto implements Postavel {
         System.out.println("Quantidade de fotos :" + this.qtde_fotos + "\nData da postagem: " + this.data_postagem
                 + "\nLocalizacao: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
                 + this.qtde_fixados);
+                if(this.descricao != null){
+                    System.out.println("Descrição: " + this.descricao);
+                }
         System.out.println("Fotos adicionadas ao post :");
         for (Foto foto : this.fotos) {
             System.out.println(foto.toString());
