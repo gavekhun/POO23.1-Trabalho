@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Factory.PostavelFactory;
-import Postagem.Comentario;
+
 import Postagem.PostFoto;
 import Postagem.PostVideo;
 import Postagem.Postavel;
@@ -71,7 +71,8 @@ public class Main {
         ((PostFoto) postagem).postSemFoto(localizacao, descricao);
         postavels.add(postagem);
         if(((PostFoto) postagem).postSemFoto(localizacao, descricao)){
-            System.out.println("\\033[92m Postagem criada com sucesso!");
+            System.out.println("\\033[92m");
+            System.out.println(" Postagem criada com sucesso!");
         }
 
     }
@@ -112,14 +113,15 @@ public class Main {
 
         Video video = new Video(url, frame, duracao);
 
-        Postavel postagem = PostavelFactory.getPostavel("POSTVIDEO", false, localizacao);
+        Postavel postagem = PostavelFactory.getPostavel("POSTVIDEO", true, localizacao);
         ((PostVideo) postagem).adicionaVideo(video);
         postagem.posta();
 
         postavels.add(postagem);
 
         if(postagem.posta()){
-            System.out.println("\\033[92mPostagem criada com sucesso!");
+            System.out.println("\\\\033[92m");
+            System.out.println("Postagem criada com sucesso!");
         }
 
 

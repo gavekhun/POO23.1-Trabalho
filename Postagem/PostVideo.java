@@ -19,6 +19,7 @@ public class PostVideo implements Postavel {
 
   public boolean adicionaVideo(Video video) {
     if (video != null) {
+      this.data_postagem = LocalDateTime.now();
       this.video = video;
       // this.printAtributos();
       return true;
@@ -42,6 +43,7 @@ public class PostVideo implements Postavel {
       System.out.println("-----------------------------------------------------");
       this.printAtributos();
       System.out.println("-----------------------------------------------------");
+      return true;
     }
     pritnErro("Nenhum vídeo foi selecionado");
     return false;
@@ -59,13 +61,15 @@ public class PostVideo implements Postavel {
       return false;
     }
   }
-  public Video getVideo(){
+  public Video getVideo(){    
     return this.video;
   }
   
 
   private void printAtributos() {
-    System.out.println("Dados do vídeo :" + getVideo() + "\nData da postagem: " + this.data_postagem
+    Video video = this.video;
+
+    System.out.println("Dados do vídeo :" + video.toString() + "\nData da postagem: " + this.data_postagem
         + "\nQuantidade de comentários Fixados: "
         + this.qtde_fixados);
     System.out.println("Comentários do post");
