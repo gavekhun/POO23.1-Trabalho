@@ -145,10 +145,10 @@ public class ExecucaoTeste {
             Foto foto = new Foto("foto.cjd", "25px");
             post.adicionaFoto(foto);
             post.posta();
-            post.comenta("Lindo!!😘");
+            post.comenta("Lindo!!");
             post.printAtributos();
         } catch (Error e) {
-            System.out.println("Erro ao enviar fpoto: " + e);
+            System.out.println("Erro ao enviar foto: " + e);
 
         }
     }

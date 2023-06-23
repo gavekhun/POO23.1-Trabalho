@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import Recurso.Video;
 
-public class PostVideo implements Postavel {
+public class PostVideo extends Post implements Postavel {
 
   private Video video;
   private LocalDateTime data_postagem;
@@ -28,6 +28,7 @@ public class PostVideo implements Postavel {
   public boolean posta() {
     if (this.video != null) {
       this.data_postagem = LocalDateTime.now();
+      Post.prox_ID += 1;
       return true;
     }
     throw new Error("Nenhum vídeo foi adicionado");
@@ -54,7 +55,7 @@ public class PostVideo implements Postavel {
 
   public void printAtributos() {
     Video video = this.video;
-    System.out.println("Dados do vídeo: " + (video != null ? video.toString() : "Nenhum video adicionado")
+    System.out.println("ID da postagem: " + this.ID + "\nDados do vídeo: " + (video != null ? video.toString() : "Nenhum video adicionado")
         + "\nData da postagem: " + this.data_postagem
         + "\nQuantidade de comentários Fixados: "
         + this.qtde_fixados);

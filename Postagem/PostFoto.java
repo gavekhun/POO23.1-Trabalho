@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import Recurso.Foto;
 
-public class PostFoto implements Postavel {
+public class PostFoto extends Post implements Postavel {
 
     private int qtde_fotos;
     private ArrayList<Foto> fotos = new ArrayList<Foto>();
@@ -107,8 +107,10 @@ public class PostFoto implements Postavel {
 
     @Override
     public boolean posta() {
-        if (this.fotos.size() >= 1 && this.fotos.size() <= 10) {
+        if (this.fotos.size() > 0) {
             this.data_postagem = LocalDateTime.now();
+            System.out.print("ID " + Post.prox_ID  );
+            Post.prox_ID += 1;
             return true;
         }
         throw new Error("Nenhuma foto adicionada ao post");
@@ -130,7 +132,8 @@ public class PostFoto implements Postavel {
     }
 
     public void printAtributos() {
-        System.out.println("Quantidade de fotos: " + this.qtde_fotos + "\nData da postagem: " + this.data_postagem
+        System.out.println("ID da postagem: " + this.ID + "\nQuantidade de fotos: " + this.qtde_fotos
+                + "\nData da postagem: " + this.data_postagem
                 + "\nLocalização: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
                 + this.qtde_fixados);
         if (this.descricao != null) {
@@ -144,6 +147,7 @@ public class PostFoto implements Postavel {
         for (Comentario coment : this.lista_comentarios) {
             System.out.println(coment.toString());
         }
+
     }
 
     private void pritnErro(String msg) {
