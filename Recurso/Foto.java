@@ -27,17 +27,13 @@ public class Foto extends Recurso {
 
       return true;
     }
-    this.pritnErro("Extensão inválida. Selecionar .jpg, .png ou .bmp");
-    return false;
+    throw new Error("Extensão inválida. A foto precisa ter umas das extensões: .jpg, .png ou .bmp");
   }
 
   @Override
   public String toString() {
-    return "Foto {" + "ID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado? "
-        + this.validaUrlRecurso(url_recurso) + "}";
+    return "Foto {" + "ID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado: "
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + "}";
   }
 
-  private void pritnErro(String msg) {
-    System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);
-  }
 }

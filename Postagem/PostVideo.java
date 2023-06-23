@@ -11,65 +11,51 @@ public class PostVideo implements Postavel {
   private ArrayList<Comentario> lista_comentarios = new ArrayList<Comentario>();
   private int qtde_fixados;
 
-  public PostVideo(boolean incluirVideo) {
-    if (incluirVideo == false) {
-      this.postSemVideo();
-    }
+  public PostVideo() {
+
   }
 
   public boolean adicionaVideo(Video video) {
     if (video != null) {
-      this.data_postagem = LocalDateTime.now();
       this.video = video;
-      // this.printAtributos();
       return true;
     }
     this.pritnErro("É necessário informar um video para ser postado");
     return false;
   }
 
-  public boolean postSemVideo() {
-    this.data_postagem = LocalDateTime.now();
-    System.out.println("-----------------------------------------------------");
-    this.printAtributos();
-    System.out.println("-----------------------------------------------------");
-    return true;
-  }
-
   @Override
   public boolean posta() {
     if (this.video != null) {
       this.data_postagem = LocalDateTime.now();
-      System.out.println("-----------------------------------------------------");
-      this.printAtributos();
-      System.out.println("-----------------------------------------------------");
       return true;
     }
-    pritnErro("Nenhum vídeo foi selecionado");
-    return false;
+    throw new Error("Nenhum vídeo foi adicionado");
   }
 
   @Override
-  public boolean comenta( String texto) {
+  public boolean comenta(String texto) {
+    if (this.data_postagem == null) {
+      throw new Error("O vídeo ainda não foi postado");
+    }
     try {
       Comentario comentario = new Comentario(texto);
       this.lista_comentarios.add(comentario);
-      // this.printAtributos();
       return true;
     } catch (NullPointerException e) {
       System.out.println("Erro ao adicionar comentário. Tente novamente.");
       return false;
     }
   }
-  public Video getVideo(){    
+
+  public Video getVideo() {
     return this.video;
   }
-  
 
-  private void printAtributos() {
+  public void printAtributos() {
     Video video = this.video;
-
-    System.out.println("Dados do vídeo :" + video.toString() + "\nData da postagem: " + this.data_postagem
+    System.out.println("Dados do vídeo: " + (video != null ? video.toString() : "Nenhum video adicionado")
+        + "\nData da postagem: " + this.data_postagem
         + "\nQuantidade de comentários Fixados: "
         + this.qtde_fixados);
     System.out.println("Comentários do post");

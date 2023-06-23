@@ -14,24 +14,27 @@ public class PostFoto implements Postavel {
     private int qtde_fixados;
     private String descricao;
 
-    public PostFoto(boolean incluirFoto, String localizacao) {
-        if (incluirFoto == false) {
-            this.data_postagem = LocalDateTime.now();
-            this.localizacao = localizacao;
-        }
+    public PostFoto() {
     }
 
     public boolean adicionaFoto(Foto foto) {
-        if (foto != null) {
+        if (foto == null) {
+            this.pritnErro("É necessário informar uma foto para ser inserida na lista");
+            return false;
+        }
+        if (this.validaQuantFoto()) {
             this.fotos.add(foto);
             this.qtde_fotos += 1;
-            // System.out.println("---------------------------------------------------------");
-            // this.printAtributos();
-            // System.out.println("---------------------------------------------------------");
             return true;
         }
-        this.pritnErro("É necessário informar uma foto para ser inserida na lista");
 
+        throw new Error("Não é possível adicionar mais de 10 fotos na lista!");
+    }
+
+    private boolean validaQuantFoto() {
+        if (this.fotos.size() < 10) {
+            return true;
+        }
         return false;
     }
 
@@ -48,16 +51,6 @@ public class PostFoto implements Postavel {
         return false;
     }
 
-    public boolean postSemFoto(String localizacao, String descricao) {
-        this.data_postagem = LocalDateTime.now();
-        this.descricao = descricao;
-        this.localizacao = localizacao;
-        System.out.println("---------------------------------------------------------");       
-        this.printAtributos();        
-        System.out.println("---------------------------------------------------------");
-        return true;
-    }
-
     public int getQtde_Fotos() {
         return this.qtde_fotos;
     }
@@ -70,9 +63,13 @@ public class PostFoto implements Postavel {
         return this.localizacao != null ? this.localizacao : "Nenhuma localização adicionada";
     }
 
-    public void setLocalizacao(String localizacao){
+    public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
 
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public ArrayList<Comentario> getComentarios() {
@@ -87,8 +84,8 @@ public class PostFoto implements Postavel {
         return this.qtde_fixados;
     }
 
-    public void fixaComenta(int index){
-        if (index >= 0 && index < lista_comentarios.size() ){
+    public void fixaComenta(int index) {
+        if (index >= 0 && index < lista_comentarios.size()) {
             Comentario comentario = lista_comentarios.get(index);
             comentario.setFixado(true);
             lista_comentarios.remove(index);
@@ -96,8 +93,9 @@ public class PostFoto implements Postavel {
             qtde_fixados++;
         }
     }
-    public void desfixaComenta(int index){
-        if(index >= 0 && index < qtde_fixados){
+
+    public void desfixaComenta(int index) {
+        if (index >= 0 && index < qtde_fixados) {
             Comentario comentario = lista_comentarios.get(index);
             comentario.setFixado(false);
             lista_comentarios.remove(index);
@@ -111,24 +109,19 @@ public class PostFoto implements Postavel {
     public boolean posta() {
         if (this.fotos.size() >= 1 && this.fotos.size() <= 10) {
             this.data_postagem = LocalDateTime.now();
-            System.out.println("---------------------------------------------------------");
-            this.printAtributos();
-            System.out.println("---------------------------------------------------------");
             return true;
         }
-        
-        this.pritnErro("Quantidade de fotos deve estar entre 1 e 10");
-        return false;
+        throw new Error("Nenhuma foto adicionada ao post");
     }
 
     @Override
     public boolean comenta(String texto) {
+        if (this.data_postagem == null) {
+            throw new Error("Foto(s) ainda não postada(s)");
+        }
         try {
             Comentario comentario = new Comentario(texto);
             this.lista_comentarios.add(comentario);
-            // System.out.println("---------------------------------------------------------");
-            // this.printAtributos();
-            // System.out.println("---------------------------------------------------------");
             return true;
         } catch (NullPointerException e) {
             System.out.println("Erro ao adicionar comentário. Tente novamente.");
@@ -136,18 +129,18 @@ public class PostFoto implements Postavel {
         }
     }
 
-    private void printAtributos() {
-        System.out.println("Quantidade de fotos :" + this.qtde_fotos + "\nData da postagem: " + this.data_postagem
-                + "\nLocalizacao: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
+    public void printAtributos() {
+        System.out.println("Quantidade de fotos: " + this.qtde_fotos + "\nData da postagem: " + this.data_postagem
+                + "\nLocalização: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
                 + this.qtde_fixados);
-                if(this.descricao != null){
-                    System.out.println("Descrição: " + this.descricao);
-                }
-        System.out.println("Fotos adicionadas ao post :");
+        if (this.descricao != null) {
+            System.out.println("Descrição: " + this.descricao);
+        }
+        System.out.println("Fotos adicionadas ao post: ");
         for (Foto foto : this.fotos) {
             System.out.println(foto.toString());
         }
-        System.out.println("Comentários do post:");
+        System.out.println("Comentários do post: ");
         for (Comentario coment : this.lista_comentarios) {
             System.out.println(coment.toString());
         }

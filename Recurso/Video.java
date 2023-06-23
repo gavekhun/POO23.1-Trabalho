@@ -24,18 +24,14 @@ public class Video extends Recurso {
     } else if (url_recurso.endsWith(".wmv")) {
       return true;
     }
-    this.pritnErro("O vídeo precisa ter uma das extensões: .mp4, .mov ou .wmv");
-    return false;
+    throw new Error("Extensão inválida. O vídeo precisa ter uma das extensões: .mp4, .mov ou .wmv");
 
   }
 
   @Override
   public String toString() {
-    return "Video { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado? "
-        + this.validaUrlRecurso(url_recurso) + " }";
+    return "Video { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado: "
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " }";
   }
 
-  private void pritnErro(String msg) {
-    System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);
-  }
 }
