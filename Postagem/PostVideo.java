@@ -27,7 +27,7 @@ public class PostVideo extends Post implements Postavel {
   @Override
   public boolean posta() {
     if (this.video != null) {
-      this.data_postagem = LocalDateTime.now();
+      this.data_postagem = LocalDateTime.now();      
       Post.prox_ID += 1;
       return true;
     }
@@ -53,9 +53,15 @@ public class PostVideo extends Post implements Postavel {
     return this.video;
   }
 
+  public ArrayList<Comentario> getComentarios() {
+        return this.lista_comentarios;
+    }
+
   public void printAtributos() {
     Video video = this.video;
-    System.out.println("ID da postagem: " + this.ID + "\nDados do vídeo: " + (video != null ? video.toString() : "Nenhum video adicionado")
+    System.out.println("------------------------------------------------------------------------");
+    System.out.println("ID da postagem: " + this.ID + "\nDados do vídeo: "
+        + (video != null ? video.toString() : "Nenhum video adicionado")
         + "\nData da postagem: " + this.data_postagem
         + "\nQuantidade de comentários Fixados: "
         + this.qtde_fixados);
@@ -63,6 +69,24 @@ public class PostVideo extends Post implements Postavel {
     for (Comentario coment : this.lista_comentarios) {
       System.out.println(coment.toString());
     }
+    System.out.println("------------------------------------------------------------------------");
+  }
+
+  public String toString() {
+    StringBuilder post = new StringBuilder();
+    post.append("\n------------------------------------------------------------------------");
+    post.append("\nID da postagem: " + this.ID + "\nDados do vídeo: "
+        + (video != null ? video.toString() : "Nenhum video adicionado")
+        + "\nData da postagem: " + this.data_postagem
+        + "\nQuantidade de comentários Fixados: "
+        + this.qtde_fixados);
+    post.append("\nComentários do post: ");
+    for (Comentario coment : this.lista_comentarios) {
+      post.append(coment.toString());
+    }
+    post.append("\n------------------------------------------------------------------------");
+    return post.toString();
+
   }
 
   private void pritnErro(String msg) {

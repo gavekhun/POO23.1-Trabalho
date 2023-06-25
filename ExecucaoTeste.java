@@ -9,7 +9,7 @@ public class ExecucaoTeste {
 
     public static void postagemTextoTeste() {
         try {
-            Postavel postavel = PostavelFactory.getPostavel("POSTTEXTO");
+            PostavelFactory.getPostavel("POSTTEXTO");
         } catch (Error e) {
             System.out.println("Erro ao tentar realizar post com texto: " + e);
         }

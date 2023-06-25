@@ -41,10 +41,7 @@ public class PostFoto extends Post implements Postavel {
     public boolean removeFoto(Foto foto) {
         if (foto != null) {
             this.fotos.remove(foto);
-            this.qtde_fotos -= 1;
-            System.out.println("---------------------------------------------------------");
-            this.printAtributos();
-            System.out.println("---------------------------------------------------------");
+            this.qtde_fotos -= 1;            
             return true;
         }
         this.pritnErro("É necessário informar uma foto para ser removida da lista");
@@ -84,6 +81,10 @@ public class PostFoto extends Post implements Postavel {
         return this.qtde_fixados;
     }
 
+    public void setData_postagem(LocalDateTime data_postagem) {
+        this.data_postagem = LocalDateTime.now();
+    }
+
     public void fixaComenta(int index) {
         if (index >= 0 && index < lista_comentarios.size()) {
             Comentario comentario = lista_comentarios.get(index);
@@ -108,8 +109,7 @@ public class PostFoto extends Post implements Postavel {
     @Override
     public boolean posta() {
         if (this.fotos.size() > 0) {
-            this.data_postagem = LocalDateTime.now();
-            System.out.print("ID " + Post.prox_ID  );
+            this.data_postagem = LocalDateTime.now();            
             Post.prox_ID += 1;
             return true;
         }
@@ -125,13 +125,14 @@ public class PostFoto extends Post implements Postavel {
             Comentario comentario = new Comentario(texto);
             this.lista_comentarios.add(comentario);
             return true;
-        } catch (NullPointerException e) {
-            System.out.println("Erro ao adicionar comentário. Tente novamente.");
+        } catch (Error e) {
+            System.out.println("Erro ao adicionar comentário. Tente novamente." + e);
             return false;
         }
     }
 
     public void printAtributos() {
+        System.out.println("------------------------------------------------------------------------");
         System.out.println("ID da postagem: " + this.ID + "\nQuantidade de fotos: " + this.qtde_fotos
                 + "\nData da postagem: " + this.data_postagem
                 + "\nLocalização: " + this.getLocalizacao() + "\nQuantidade de comentários Fixados: "
@@ -147,11 +148,34 @@ public class PostFoto extends Post implements Postavel {
         for (Comentario coment : this.lista_comentarios) {
             System.out.println(coment.toString());
         }
+        System.out.println("------------------------------------------------------------------------");
 
+    }
+
+    public String toString() {
+        StringBuilder post = new StringBuilder();
+        post.append("\n------------------------------------------------------------------------");
+        post.append("\nID: " + this.ID + "\nQuantidade de fotos: " + this.qtde_fotos +
+                "\nData da postagem: " + this.data_postagem + "\nLocalização: " + this.getLocalizacao()
+                + "\nQuantidade de comentários fixados: " + this.qtde_fixados);
+        if (this.descricao != null) {
+            post.append("Descrição: " + this.descricao);
+        }
+        post.append("\nFotos: ");
+        for (Foto foto : this.fotos) {
+            post.append(foto.toString());
+        }
+        post.append("\nComentários:");
+        for (Comentario coment : this.lista_comentarios) {
+            post.append(coment.toString());
+        }
+        post.append("\n------------------------------------------------------------------------");
+        return post.toString();
     }
 
     private void pritnErro(String msg) {
         System.out.println("Não foi possível concluir a solicitação. Motivo: " + msg);
     }
 
+    
 }

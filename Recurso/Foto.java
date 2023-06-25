@@ -32,8 +32,12 @@ public class Foto extends Recurso {
 
   @Override
   public String toString() {
-    return "Foto {" + "ID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado: "
-        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + "}";
+    StringBuilder foto = new StringBuilder();
+    foto.append("\n-_-_-_-_-_-_-_-_-_-_");
+    foto.append("\nFoto {" + "\nID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado: "
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + "}");
+    foto.append("\n-_-_-_-_-_-_-_-_-_-_");
+    return foto.toString();
   }
 
 }

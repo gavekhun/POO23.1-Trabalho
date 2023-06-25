@@ -30,8 +30,12 @@ public class Video extends Recurso {
 
   @Override
   public String toString() {
-    return "Video { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado: "
-        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " }";
+    StringBuilder video = new StringBuilder();
+    video.append("\n-_-_-_-_-_-_-_-_-_-_");
+    video.append("\nVideo { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado: "
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " }");
+    video.append("\n-_-_-_-_-_-_-_-_-_-_");
+    return video.toString();
   }
 
 }

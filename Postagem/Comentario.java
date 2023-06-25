@@ -38,9 +38,13 @@ public class Comentario {
 
   @Override
   public String toString() {
-    System.out.println("----------------------------------------");
-    return "Comentario { " + "\nData: " + this.data + "\nfixado " + this.fixado + "\ntamanho: " + getTamanho()
-        + "\ntexto: " + this.texto + "}";
+    StringBuilder comentario = new StringBuilder();
+    comentario.append("-_-_-_-_-_-_-_-_-_-_");
+    comentario.append("\nComentario { " + "\nData: " + this.data + "\nfixado " + this.fixado + "\ntamanho: " + getTamanho()
+        + "\ntexto: " + this.texto + "}");
+    comentario.append("-_-_-_-_-_-_-_-_-_-_");
+    
+    return comentario.toString();
   }
 
 }
