@@ -140,7 +140,7 @@ public class Main {
         }
 
         Postavel postagemSelect = postavels.get(iPost - 1);
-        System.out.println("Digite seu comentário: ");
+        System.out.println("Digite seu comentário:");
         String comentario = entrada.nextLine();
 
         postagemSelect.comenta(comentario);
