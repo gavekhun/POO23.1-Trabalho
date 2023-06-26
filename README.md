@@ -50,18 +50,6 @@ Depois:
 - Remover uma postagem;
 
 
-## Classes
-
-- **Postavel**: Interface que define o comportamento básico de uma postagem.
-- **PostTexto**: Classe que representa uma postagem de texto.
-- **PostFoto**: Classe que representa uma postagem de foto.
-- **PostVideo**: Classe que representa uma postagem de vídeo.
-- **Foto**: Classe que representa uma foto.
-- **Video**: Classe que representa um vídeo.
-- **Comentario**: Classe que representa um comentário em uma postagem.
-- **Feed**: Classe que gerencia o feed de postagens como um Singleton.
-
-
 ## Autores
 
 - [@gavekhun](https://www.github.com/gavekhun)
