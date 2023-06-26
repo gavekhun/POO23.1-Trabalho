@@ -40,11 +40,11 @@ public class Comentario {
   @Override
   public String toString() {
     StringBuilder comentario = new StringBuilder();
-    comentario.append("-_-_-_-_-_-_-_-_-_-_");
+    comentario.append("\n-_-_-_-_-_-_-_-_-_-_");
     comentario.append("\nComentário { " + "\nData: " + this.data + "\nfixado " + this.fixado
         + (this.fixado ? ": Sim" : ": Não") + "\ntamanho: " + getTamanho()
         + "\ntexto: " + this.texto + "\n}");
-    comentario.append("-_-_-_-_-_-_-_-_-_-_");
+    comentario.append("\n-_-_-_-_-_-_-_-_-_-_");
 
     return comentario.toString();
   }

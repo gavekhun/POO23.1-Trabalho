@@ -99,7 +99,7 @@ public class Main {
     }
 
     private static void exibirMenu() {
-        System.out.println("------------------------Bem vindos ao-----------------------------");
+        System.out.println("\n------------------------Bem vindos ao-----------------------------");
         System.out.println(
                 "           \u2580\u2588\u2580\u2500\u2588\u2580\u2580\u2500\u2588\u2500\u2588\u2500\u2580\u2588\u2580\u2500 \u2500 \u2588\u2584\u2500\u2588\u2500\u2584\u2580\u2580\u2584\u2500\u2588\u2500\u2500\u2500\u2588\u2500");
         System.out.println(
