@@ -27,11 +27,16 @@ public class PostVideo extends Post implements Postavel {
   @Override
   public boolean posta() {
     if (this.video != null) {
-      this.data_postagem = LocalDateTime.now();      
+      this.data_postagem = LocalDateTime.now();
       Post.prox_ID += 1;
       return true;
     }
     throw new Error("Nenhum vídeo foi adicionado");
+  }
+
+  @Override
+  public int getId() {
+    return this.ID;
   }
 
   @Override
@@ -54,8 +59,8 @@ public class PostVideo extends Post implements Postavel {
   }
 
   public ArrayList<Comentario> getComentarios() {
-        return this.lista_comentarios;
-    }
+    return this.lista_comentarios;
+  }
 
   public void printAtributos() {
     Video video = this.video;
@@ -86,6 +91,27 @@ public class PostVideo extends Post implements Postavel {
     }
     post.append("\n------------------------------------------------------------------------");
     return post.toString();
+
+  }
+
+  public void fixaComenta(int index) {
+    if (index >= 0 && index < lista_comentarios.size()) {
+      Comentario comentario = lista_comentarios.get(index);
+      comentario.setFixado(true);
+      lista_comentarios.remove(index);
+      lista_comentarios.add(qtde_fixados, comentario);
+      qtde_fixados++;
+    }
+  }
+
+  public void desfixaComenta(int index) {
+    if (index >= 0 && index < qtde_fixados) {
+      Comentario comentario = lista_comentarios.get(index);
+      comentario.setFixado(false);
+      lista_comentarios.remove(index);
+      lista_comentarios.add(comentario);
+      qtde_fixados--;
+    }
 
   }
 

@@ -23,7 +23,8 @@ public class Comentario {
   public boolean getFixado() {
     return this.fixado;
   }
-  public void setFixado(boolean fixado){
+
+  public void setFixado(boolean fixado) {
     this.fixado = fixado;
 
   }
@@ -40,10 +41,11 @@ public class Comentario {
   public String toString() {
     StringBuilder comentario = new StringBuilder();
     comentario.append("-_-_-_-_-_-_-_-_-_-_");
-    comentario.append("\nComentario { " + "\nData: " + this.data + "\nfixado " + this.fixado + "\ntamanho: " + getTamanho()
-        + "\ntexto: " + this.texto + "}");
+    comentario.append("\nComentário { " + "\nData: " + this.data + "\nfixado " + this.fixado
+        + (this.fixado ? ": Sim" : ": Não") + "\ntamanho: " + getTamanho()
+        + "\ntexto: " + this.texto + "\n}");
     comentario.append("-_-_-_-_-_-_-_-_-_-_");
-    
+
     return comentario.toString();
   }
 

@@ -6,4 +6,6 @@ public interface Postavel {
 
     public abstract boolean comenta(String texto);
 
+    public abstract int getId();
+
 }

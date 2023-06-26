@@ -79,7 +79,7 @@ public class ExecucaoTeste {
             Postavel postagem = PostavelFactory.getPostavel("POSTFOTO");
             PostFoto post = ((PostFoto) postagem);
             post.setLocalizacao("Cidade Universitária, Fundão - Rio de Janeiro");
-            int i = 15;
+            int i = 11;
             while (i != 0) {
                 Foto foto = new Foto("foto" + i + ".png", "5px");
                 post.adicionaFoto(foto);
@@ -100,7 +100,7 @@ public class ExecucaoTeste {
             Foto foto = new Foto("foto.png", "25px");
             post.adicionaFoto(foto);
             post.posta();
-            post.comenta("Lindo!!😘");
+            post.comenta("Lindo!!");
             post.printAtributos();
         } catch (Error e) {
             System.out.println("Erro ao tentar comentar na foto: " + e);
@@ -153,35 +153,28 @@ public class ExecucaoTeste {
         }
     }
 
-    public static void teste() {
-        int i = 5;
-        while (i != 0) {
-            i--;
-            throw new Error();
-        }
-    }
-
     public static void main(String[] args) {
-        System.out.println("------------------------Bem vindos ao-----------------------------");
         System.out.println("Iniciando execuçao dos testes \n\n");
+
+        System.out.println("\n1.Tentativa de postagem com texto\n");
         ExecucaoTeste.postagemTextoTeste();
-        System.out.println("\n1.Tentativa de postagem com um vídeo atribuído\n");
+        System.out.println("\n2.Tentativa de postagem com um vídeo atribuído\n");
         ExecucaoTeste.postagemComVideoTeste();
-        System.out.print("\n2.Tentativa de postagem sem vídeo\n");
+        System.out.print("\n3.Tentativa de postagem sem vídeo\n");
         ExecucaoTeste.postagemSemVideoTeste();
-        System.out.println("\n3.Tentativa de postagem sem foto\n");
+        System.out.println("\n4.Tentativa de postagem sem foto\n");
         ExecucaoTeste.postagemSemFotoTeste();
-        System.out.println("\n4.Tentativa de postagem com 5 fotos atribuídas\n");
+        System.out.println("\n5.Tentativa de postagem com 5 fotos atribuídas\n");
         ExecucaoTeste.postagemComCincoFotosTeste();
-        System.out.println("\n5.Tentativa de postagem com 11 fotos atribuídas\n");
+        System.out.println("\n6.Tentativa de postagem com 11 fotos atribuídas\n");
         ExecucaoTeste.postagemComOnzeFotosTeste();
-        System.out.println("\n6.Tentativa de criação de comentário em uma postagem com foto\n");
+        System.out.println("\n7.Tentativa de criação de comentário em uma postagem com foto\n");
         ExecucaoTeste.comentarioPostFotoTeste();
-        System.out.println("\n7.Tentativa de criação de comentário em uma postagem com vídeo\n");
+        System.out.println("\n8.Tentativa de criação de comentário em uma postagem com vídeo\n");
         ExecucaoTeste.comentarioPostVideoTeste();
-        System.out.println("\n8.Tentativa de criação de vídeo inválida\n");
+        System.out.println("\n9.Tentativa de criação de vídeo inválida\n");
         ExecucaoTeste.videoInvalidoTeste();
-        System.out.println("\n9.Tentativa de criação de foto inválida\n");
+        System.out.println("\n10.Tentativa de criação de foto inválida\n");
         ExecucaoTeste.fotoInvalidaTeste();
 
     }

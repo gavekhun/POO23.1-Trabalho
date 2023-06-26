@@ -35,7 +35,7 @@ public class Foto extends Recurso {
     StringBuilder foto = new StringBuilder();
     foto.append("\n-_-_-_-_-_-_-_-_-_-_");
     foto.append("\nFoto {" + "\nID: " + this.ID + "\nResolução: " + this.resolucao + "\nValidado: "
-        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + "}");
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " \n}");
     foto.append("\n-_-_-_-_-_-_-_-_-_-_");
     return foto.toString();
   }

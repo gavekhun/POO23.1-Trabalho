@@ -1,32 +1,31 @@
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import Factory.PostavelFactory;
 import Postagem.Comentario;
-import Postagem.Feed;
 import Postagem.PostFoto;
 import Postagem.PostVideo;
 import Postagem.Postavel;
 import Recurso.Foto;
 import Recurso.Video;
+import Singleton.FeedSingleton;
 
 public class Main {
-    private static ArrayList<Postavel> postavels = new ArrayList<>();
-    private static Feed feed = Feed.getInstance();
+    protected static FeedSingleton feed = FeedSingleton.getInstance();
 
     public static void main(String[] args) {
 
-        Scanner entrada = new Scanner(System.in);
         int opcao;
 
         do {
             exibirMenu();
+            Scanner entrada = new Scanner(System.in);
             opcao = entrada.nextInt();
             entrada.nextLine();
             switch (opcao) {
                 case 1:
                     try {
-                        criarPostSemFoto(entrada, postavels);
+                        criarPostComFoto(entrada);
 
                         break;
 
@@ -35,8 +34,7 @@ public class Main {
                     }
                 case 2:
                     try {
-                        criarPostComFoto(entrada, postavels);
-
+                        criarPostComVideo(entrada);
                         break;
 
                     } catch (Error error) {
@@ -45,7 +43,7 @@ public class Main {
 
                 case 3:
                     try {
-                        criarPostComVideo(entrada, postavels);
+                        comentar(entrada);
 
                         break;
 
@@ -55,7 +53,7 @@ public class Main {
 
                 case 4:
                     try {
-                        comentar(entrada, postavels);
+                        exibirFeed();
                         break;
                     } catch (Error error) {
                         System.out.println("Erro: " + error);
@@ -63,7 +61,7 @@ public class Main {
 
                 case 5:
                     try {
-                        exibirFeed();
+                        fixarComentario(entrada);
                         break;
 
                     } catch (Error error) {
@@ -71,20 +69,19 @@ public class Main {
                     }
                 case 6:
                     try {
-                        fixarComentario(entrada);
+                        desfixarComentario(entrada);
                         break;
 
                     } catch (Error error) {
                         System.out.println("Erro: " + error);
                     }
-
                 case 7:
                     try {
-                        desfixarComentario(entrada);
+                        excluirPostagem(entrada);
                         break;
 
                     } catch (Error error) {
-                        System.out.println("Error: " + error);
+                        System.out.println("Erro: " + error);
                     }
 
                 case 8:
@@ -109,11 +106,9 @@ public class Main {
                 "           \u2500\u2588\u2500\u2500\u2588\u2580\u2580\u2500\u2584\u2580\u2584\u2500\u2500\u2588\u2500\u2500 \u2500 \u2588\u2500\u2580\u2588\u2500\u2588\u2500\u2500\u2588\u2500\u2588\u2500\u2588\u2500\u2588\u2500\r");
         System.out.println(
                 "           \u2500\u2588\u2500\u2500\u2580\u2580\u2580\u2500\u2580\u2500\u2580\u2500\u2500\u2588\u2500\u2500 \u2500 \u2580\u2500\u2500\u2580\u2500\u2500\u2580\u2580\u2500\u2500\u2500\u2580\u2500\u2580\u2500\u2500");
-        System.out.println("----Selecione uma opção:");
-        System.out.println("----(1) Criar uma postagem sem foto (2) Criar uma postagem com foto");
-        System.out.println("----(3) Criar uma postagem com video (4) Comentar em uma postagem");
-        System.out.println("----(5) Exibir feed (6) Fixar Comentário (7) Desfixar Comentário" +
-                "\n----(8) Sair.");
+        System.out.println("Selecione uma opção:\n");
+        System.out.println(
+                " (1) Criar uma postagem com foto\n (2) Criar uma postagem com video\n (3) Comentar em uma postagem\n (4) Exibir feed\n (5) Fixar Comentário\n (6) Desfixar Comenário\n (7) Excluir postagem\n (8) Sair");
     }
 
     private static void exibirFeed() {
@@ -121,49 +116,29 @@ public class Main {
 
     }
 
-    private static void criarPostSemFoto(Scanner entrada, ArrayList<Postavel> postavels) {
+    private static void criarPostComFoto(Scanner entrada) {
         try {
-            System.out.println("De onde você é?");
-            String localizacao = entrada.nextLine();
-            System.out.println("O que você está pensando?");
-            String descricao = entrada.nextLine();
 
-            Postavel postagem = PostavelFactory.getPostavel("POSTFOTO");
-            PostFoto post = ((PostFoto) postagem);
-            post.setDescricao(descricao);
-            post.setLocalizacao(localizacao);
-            post.setData_postagem(LocalDateTime.now());
-            post.printAtributos();
-            postavels.add(post);
-            feed.adicionarPostagem(post);
-        } catch (Error error) {
-            System.out.println("Erro ao criar a postagem: " + error);
-        }
-
-    }
-
-    private static void criarPostComFoto(Scanner entrada, ArrayList<Postavel> postavels) {
-        try {
             System.out.println("De onde você é?");
             String localizacao = entrada.nextLine();
             Postavel postagem = PostavelFactory.getPostavel("POSTFOTO");
             PostFoto post = ((PostFoto) postagem);
             post.setLocalizacao(localizacao);
 
-            boolean addFotos = true;
             int cont = 1;
 
-            while (addFotos) {
+            while (cont < 11) {
                 try {
-                    System.out.println("Digite a url da foto" + cont + "(ou 'sair' para finalizar):");
+                    System.out.println(
+                            "Digite a url da foto " + cont + " (ou digite 'postar' para postar a(s) foto(s)):");
                     String url = entrada.nextLine();
 
-                    if (url.equals("sair")) {
-                        addFotos = false;
-                        continue;
+                    if (url.equals("postar")) {
+                        break;
+
                     }
 
-                    System.out.println("Digite a resolução da foto" + cont + ":");
+                    System.out.println("Digite a resolução da foto " + cont + ":");
                     String resolucao = entrada.nextLine();
 
                     Foto foto = new Foto(url, resolucao);
@@ -171,10 +146,6 @@ public class Main {
 
                     cont++;
 
-                    if (cont > 11) {
-                        System.out.println("Limite máximo de 11 fotos atingidas.");
-                        break;
-                    }
                 } catch (Error error) {
                     System.out.println("Error ao adicionar foto: " + error.getMessage());
 
@@ -184,17 +155,20 @@ public class Main {
             post.posta();
             post.printAtributos();
 
-            postavels.add(post);
             feed.adicionarPostagem(post);
 
         } catch (Error error) {
             System.out.println("Erro ao criar a postagem: " + error);
+        }catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
         }
 
     }
 
-    private static void criarPostComVideo(Scanner entrada, ArrayList<Postavel> postavels) {
+    private static void criarPostComVideo(Scanner entrada) {
         try {
+
             System.out.println("Digite a url do vídeo: ");
             String url = entrada.nextLine();
             System.out.println("Digite o frame rate do vídeo:(Número) ");
@@ -202,24 +176,27 @@ public class Main {
             System.out.println("Digite a duração do vídeo:(Número) ");
             int duracao = entrada.nextInt();
             Video video = new Video(url, frame, duracao);
-
             Postavel postagem = PostavelFactory.getPostavel("POSTVIDEO");
             PostVideo post = ((PostVideo) postagem);
 
             post.adicionaVideo(video);
             post.posta();
             post.printAtributos();
-            postavels.add(post);
             feed.adicionarPostagem(post);
 
-        } catch (Error error) {
-            System.out.println("Erro ao criar a postagem: " + error);
+        } catch (Error err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+        } catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
         }
     }
 
-    private static void comentar(Scanner entrada, ArrayList<Postavel> postavels) {
+    private static void comentar(Scanner entrada) {
         try {
             exibirFeed();
+            ArrayList<Postavel> postavels = getPostavels();
+
             if (postavels.isEmpty()) {
                 return;
             }
@@ -227,13 +204,19 @@ public class Main {
 
             int iPost = entrada.nextInt();
             entrada.nextLine();
-
-            if (iPost < 1 || iPost > postavels.size()) {
+            int finded = -1;
+            for (Postavel post : postavels) {
+                if (post.getId() == iPost) {
+                    finded = postavels.indexOf(post);
+                    break;
+                }
+            }
+            if (finded == -1) {
                 System.out.println("Postagem inválida");
-
+                return;
             }
 
-            Postavel postagemSelect = postavels.get(iPost - 1);
+            Postavel postagemSelect = postavels.get(finded);
             System.out.println("Digite seu comentário: ");
             String comentario = entrada.nextLine();
 
@@ -241,27 +224,39 @@ public class Main {
 
         } catch (Error error) {
             System.out.println("Erro ao comentar: " + error);
+        } catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
         }
 
     }
 
     private static void fixarComentario(Scanner entrada) {
         try {
+            ArrayList<Postavel> postavels = getPostavels();
+
             exibirFeed();
             if (postavels.isEmpty()) {
                 System.out.println("Não há postagens disponiveis.");
             }
 
             System.out.println("Selecione a postagem em que deseja fixar um comentário");
-            int indexPost = entrada.nextInt();
+            int idPost = entrada.nextInt();
             entrada.nextLine();
 
-            if (indexPost < 1 || indexPost > postavels.size()) {
-                System.out.println("Postagem invalida");
+            int finded = -1;
+            for (Postavel post : postavels) {
+                if (post.getId() == idPost) {
+                    finded = postavels.indexOf(post);
+                    break;
+                }
+            }
+            if (finded == -1) {
+                System.out.println("Postagem inválida");
                 return;
             }
 
-            Postavel postSelect = postavels.get(indexPost - 1);
+            Postavel postSelect = postavels.get(finded);
             if (postSelect instanceof PostFoto) {
                 try {
                     PostFoto postFoto = (PostFoto) postSelect;
@@ -276,13 +271,14 @@ public class Main {
                     int indexComment = entrada.nextInt();
                     entrada.nextLine();
 
-                    if (indexComment < 1 || indexPost > comentarios.size()) {
-                        System.out.println("Comentário invalido.");
+                    if (indexComment < 1 || indexComment > comentarios.size()) {
+                        System.out.println("Comentário não encontrado.");
                         return;
                     }
 
-                    Comentario comentario = comentarios.get(indexComment - 1);
-                    comentario.setFixado(true);
+                    // Comentario comentario = comentarios.get(indexComment - 1);
+                    // comentario.setFixado(true);
+                    postFoto.fixaComenta(indexComment - 1);
 
                     System.out.println("Comentário fixado!");
 
@@ -305,9 +301,9 @@ public class Main {
                         System.out.println("Comentário invalido.");
                         return;
                     }
-                    Comentario comentario = comentarios.get(indexComment - 1);
-                    comentario.setFixado(true);
-
+                    // Comentario comentario = comentarios.get(indexComment - 1);
+                    // comentario.setFixado(true);
+                    postVideo.fixaComenta(indexComment - 1);
                     System.out.println("Comentário fixado.");
                 } catch (Error error) {
                     System.out.println("Um erro inesperado: " + error);
@@ -319,27 +315,39 @@ public class Main {
 
         } catch (Error error) {
             System.out.println("Erro: " + error);
+        } catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
         }
 
     }
 
     private static void desfixarComentario(Scanner entrada) {
         try {
+            ArrayList<Postavel> postavels = getPostavels();
+
             exibirFeed();
             if (postavels.isEmpty()) {
                 System.out.println("Não há postagens disponiveis.");
             }
 
             System.out.println("Selecione a postagem em que deseja desfixar um comentário");
-            int indexPost = entrada.nextInt();
+            int idPost = entrada.nextInt();
             entrada.nextLine();
 
-            if (indexPost < 1 || indexPost > postavels.size()) {
-                System.out.println("Postagem invalida");
+            int finded = -1;
+            for (Postavel post : postavels) {
+                if (post.getId() == idPost) {
+                    finded = postavels.indexOf(post);
+                    break;
+                }
+            }
+            if (finded == -1) {
+                System.out.println("Postagem inválida");
                 return;
             }
 
-            Postavel postSelect = postavels.get(indexPost - 1);
+            Postavel postSelect = postavels.get(finded);
             if (postSelect instanceof PostFoto) {
                 try {
                     PostFoto postFoto = (PostFoto) postSelect;
@@ -354,14 +362,14 @@ public class Main {
                     int indexComment = entrada.nextInt();
                     entrada.nextLine();
 
-                    if (indexComment < 1 || indexPost > comentarios.size()) {
-                        System.out.println("Comentário invalido.");
+                    if (indexComment < 1 || indexComment > comentarios.size()) {
+                        System.out.println("Comentário não encontrado.");
                         return;
                     }
 
-                    Comentario comentario = comentarios.get(indexComment - 1);
-                    comentario.setFixado(false);
-
+                    // Comentario comentario = comentarios.get(indexComment - 1);
+                    // comentario.setFixado(false);
+                    postFoto.desfixaComenta(indexComment - 1);
                     System.out.println("Comentário fixado!");
 
                 } catch (Error error) {
@@ -383,9 +391,9 @@ public class Main {
                         System.out.println("Comentário invalido.");
                         return;
                     }
-                    Comentario comentario = comentarios.get(indexComment - 1);
-                    comentario.setFixado(false);
-
+                    // Comentario comentario = comentarios.get(indexComment - 1);
+                    // comentario.setFixado(false);
+                    postVideo.desfixaComenta(indexComment - 1);
                     System.out.println("Comentário fixado.");
                 } catch (Error error) {
                     System.out.println("Um erro inesperado: " + error);
@@ -397,46 +405,50 @@ public class Main {
 
         } catch (Error error) {
             System.out.println("Erro: " + error);
+        } catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
+        }
+    }
+
+    private static void excluirPostagem(Scanner entrada) {
+        try {
+            ArrayList<Postavel> postavels = getPostavels();
+            exibirFeed();
+            if (postavels.isEmpty()) {
+                System.out.println("Não há postagens disponiveis.");
+                return;
+            }
+            System.out.println("Selecione o ID postagem que você deseja excluir");
+            int id = entrada.nextInt();
+            Postavel finded = null;
+            for (Postavel post : postavels) {
+                System.out.println("ID" + post.getId());
+                if (post.getId() == id) {
+                    finded = (post);
+                    break;
+                }
+            }
+            if (finded == null) {
+                System.out.println("ID não encontrado! Por favor, insira um ID válido!");
+                return;
+            }
+            System.out.println("finded " + finded);
+            postavels.remove(finded);
+            System.out.println(postavels.toString());
+            System.out.print("Postagem deletada com sucesso!");
+            return;
+        } catch (Error error) {
+            System.out.println("Erro: " + error);
+        } catch (InputMismatchException err) {
+            System.out.println("Erro ao criar a postagem: " + err);
+
         }
 
     }
 
-    
-    // private static void removerFotos(Scanner entrada) {
-    //     exibirFeed();
-    //     if (postavels.isEmpty()) {
-    //         System.out.println("Não há postagens");
-    //     }
-
-    //     System.out.println("Selecione a postagem que você quer remover a foto:");
-    //     int foto = entrada.nextInt();
-    //     entrada.nextLine();
-
-    //     if (foto < 1 || foto > postavels.size()) {
-    //         System.out.println("Postagem invalida!");
-    //         return;
-    //     }
-
-    //     Postavel postSelect = postavels.get(foto - 1);
-
-    //     if (postSelect instanceof PostFoto) {
-    //         PostFoto postFoto = (PostFoto) postSelect;
-    //         ArrayList<Foto> fotos = postFoto.getFotos();
-    //         if (fotos.isEmpty()) {
-    //             System.out.println("Sem fotos para serem removidas!");
-    //             return;
-    //         }
-
-    //         System.out.println("Selecione a foto que queira remover:");
-    //         int indexFoto = entrada.nextInt();
-    //         entrada.nextLine();
-    //         if (indexFoto < 1 || indexFoto > fotos.size()) {
-    //             System.out.println("Foto invalida");
-    //             return;
-    //         }
-    //         boolean removido = postFoto.removeFoto(indexFoto - 1);
-
-    //     }
-    // }
+    private static ArrayList<Postavel> getPostavels() {
+        return Main.feed.getPostavels();
+    }
 
 }

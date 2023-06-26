@@ -107,6 +107,11 @@ public class PostFoto extends Post implements Postavel {
     }
 
     @Override
+    public int getId(){
+        return this.ID;
+    }
+
+    @Override
     public boolean posta() {
         if (this.fotos.size() > 0) {
             this.data_postagem = LocalDateTime.now();            

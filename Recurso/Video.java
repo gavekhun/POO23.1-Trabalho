@@ -33,7 +33,7 @@ public class Video extends Recurso {
     StringBuilder video = new StringBuilder();
     video.append("\n-_-_-_-_-_-_-_-_-_-_");
     video.append("\nVideo { " + "ID: " + this.ID + "\nURL: " + this.url_recurso + "\nValidado: "
-        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " }");
+        + (this.validaUrlRecurso(url_recurso) ? "Sim" : "Não") + " \n}");
     video.append("\n-_-_-_-_-_-_-_-_-_-_");
     return video.toString();
   }
