@@ -53,5 +53,5 @@ Depois:
 ## Alunos
 
 - [@gavekhun](https://www.github.com/gavekhun) Gabriel Tiburcio DRE: 121175081
-- [@bellav0](https://github.com/bellav0)   Isabella Vitoria
+- [@bellav0](https://github.com/bellav0)   Isabella Vitoria DRE: 118165397
 
