@@ -50,8 +50,8 @@ Depois:
 - Remover uma postagem;
 
 
-## Autores
+## Alunos
 
-- [@gavekhun](https://www.github.com/gavekhun)
-- [@bellav0](https://github.com/bellav0)
+- [@gavekhun](https://www.github.com/gavekhun) Gabriel Tiburcio DRE: 121175081
+- [@bellav0](https://github.com/bellav0)   Isabella Vitoria
 
